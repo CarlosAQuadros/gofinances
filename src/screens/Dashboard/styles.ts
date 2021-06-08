@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { FontAwesome  } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons'
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
 import theme from '../../global/styles/theme';
 
@@ -18,6 +18,7 @@ export const UserWrapper = styled.View`
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
+
     padding: 0 25px;
     width: 100%;
     margin-top: 58px;
@@ -46,7 +47,16 @@ export const UserName = styled.Text`
     font-family: ${({ theme }) => theme.fonts.bold};
     color: ${({ theme }) => theme.colors.shape};
  `;
- export const Icon = styled(FontAwesome)`
+export const Icon = styled(FontAwesome)`
     color: ${({ theme }) => theme.colors.secondary};
     font-size: ${RFValue(24)}px;
  `;
+export const HighlightCards = styled.ScrollView.attrs({
+    horizontal: true,
+    showsHorizontalScrollIndicator: false,
+    contentContainerStyle: { paddingHorizontal: 24 }
+})`
+    width: 100%;
+    position: absolute;
+    margin-top: ${RFPercentage(20)}px;
+`;
