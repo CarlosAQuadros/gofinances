@@ -1,5 +1,6 @@
 import React from 'react';
 import { HighlightCard } from '../../components/HighlightCard';
+import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard';
 
 import {
   Container,
@@ -11,9 +12,44 @@ import {
   UserGreetingg,
   UserName,
   Icon,
-  HighlightCards
+  HighlightCards,
+  Transactions,
+  Title,
+  TransactionList
 } from './styles';
+
+
 export function Dashboard() {
+  const data = [{
+    type:"positive",
+    title: "desenvolvimento de site",
+    amount: "R$ 1500000",
+    category: {
+      name: 'vendas',
+      icon: 'dollar-sign'
+    },
+    date: "14/15/1222"
+  },
+  {
+    type:"negative",
+    title: "hamburgueria pizssszy",
+    amount: "R$ 59,00",
+    category: {
+      name: 'alimentação',
+      icon: 'coffee'
+    },
+    date: "14/15/1222"
+  },
+  {
+    type:"negative",
+    title: "aluguel do apartamento",
+    amount: "R$ 1.200",
+    category: {
+      name: 'casa',
+      icon: 'shopping-bag'
+    },
+    date: "14/15/1222"
+  }]
   return (
     <Container >
       <Header>
@@ -40,18 +76,25 @@ export function Dashboard() {
         <HighlightCard
           title="Saidas"
           amount="R$ 17.400,00"
-          lastTransaction="Ultima entrada dia 13 de abril" 
+          lastTransaction="Ultima entrada dia 13 de abril"
           type='down'
-          />
+        />
         <HighlightCard
           title="Saldo"
           amount="R$ 17.400,00"
           lastTransaction="Ultima entrada dia 13 de abril"
           type='total'
-          />
+        />
       </HighlightCards>
+      <Transactions>
+        <Title>Listagem</Title>
 
-    </Container>
+        <TransactionList
+          data={data}
+          renderItem={({ item }) =><TransactionCard data={item}/>}
+        />
+      </Transactions>
+    </Container >
   )
 }
 

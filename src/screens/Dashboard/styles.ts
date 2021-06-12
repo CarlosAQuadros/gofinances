@@ -1,8 +1,9 @@
 import styled from 'styled-components/native';
-import { FontAwesome } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
+import {FlatLis} from 'react'
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
 import theme from '../../global/styles/theme';
-
+import {DataListProps}from '.'
 export const Container = styled.View`
     flex: 1;
     background-color: ${({ theme }) => theme.colors.background};
@@ -47,7 +48,7 @@ export const UserName = styled.Text`
     font-family: ${({ theme }) => theme.fonts.bold};
     color: ${({ theme }) => theme.colors.shape};
  `;
-export const Icon = styled(FontAwesome)`
+export const Icon = styled(Feather)`
     color: ${({ theme }) => theme.colors.secondary};
     font-size: ${RFValue(24)}px;
  `;
@@ -59,4 +60,22 @@ export const HighlightCards = styled.ScrollView.attrs({
     width: 100%;
     position: absolute;
     margin-top: ${RFPercentage(20)}px;
+`;
+export const Transactions = styled.View`
+    flex: 1%;
+    padding:0 24px;
+
+    margin-top: ${RFPercentage(12)}px;
+`;
+export const Title = styled.Text`
+    margin-bottom: 16px;
+    font-size: ${RFValue(18)}px;
+    font-family: ${({ theme }) => theme.fonts.regular};
+`;
+
+export const TransactionList = styled.FlatList.attrs({
+    showsVerticalScrollIndicator:false,
+    contentContainerStyle:{paddingBottom:20,}
+})`
+
 `;
