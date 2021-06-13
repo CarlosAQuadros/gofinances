@@ -1,9 +1,11 @@
 import styled from 'styled-components/native';
 import { Feather } from '@expo/vector-icons'
-import {FlatLis} from 'react'
+import { FlatList } from 'react-native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'
 import theme from '../../global/styles/theme';
-import {DataListProps}from '.'
+
+import { DataListProps } from '.'
+
 export const Container = styled.View`
     flex: 1;
     background-color: ${({ theme }) => theme.colors.background};
@@ -73,9 +75,13 @@ export const Title = styled.Text`
     font-family: ${({ theme }) => theme.fonts.regular};
 `;
 
-export const TransactionList = styled.FlatList.attrs({
-    showsVerticalScrollIndicator:false,
-    contentContainerStyle:{paddingBottom:20,}
+export const TransactionList = styled(
+    FlatList as new ()=> FlatList<DataListProps>
+    ).attrs({
+    showsVerticalScrollIndicator: false,
+    contentContainerStyle: {
+        paddingBottom: 20,
+    }
 })`
 
 `;

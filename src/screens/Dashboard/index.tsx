@@ -19,9 +19,16 @@ import {
 } from './styles';
 
 
+export interface DataListProps extends TransactionCardProps {
+  id: string
+}
+
 export function Dashboard() {
-  const data = [{
-    type:"positive",
+
+
+  const data :DataListProps []= [{
+    id: '1',
+    type: "positive",
     title: "desenvolvimento de site",
     amount: "R$ 1500000",
     category: {
@@ -31,7 +38,8 @@ export function Dashboard() {
     date: "14/15/1222"
   },
   {
-    type:"negative",
+    id: '2',
+    type: "negative",
     title: "hamburgueria pizssszy",
     amount: "R$ 59,00",
     category: {
@@ -41,7 +49,8 @@ export function Dashboard() {
     date: "14/15/1222"
   },
   {
-    type:"negative",
+    id: '3',
+    type: "negative",
     title: "aluguel do apartamento",
     amount: "R$ 1.200",
     category: {
@@ -63,7 +72,7 @@ export function Dashboard() {
               <UserName>Carlos</UserName>
             </User>
           </UserInfo>
-          <Icon name="power-off" />
+          <Icon name="power" />
         </UserWrapper>
       </Header>
       <HighlightCards>
@@ -91,7 +100,8 @@ export function Dashboard() {
 
         <TransactionList
           data={data}
-          renderItem={({ item }) =><TransactionCard data={item}/>}
+          keyExtractor={item => item.id}
+          renderItem={({ item }) => <TransactionCard data={item} />}
         />
       </Transactions>
     </Container >
