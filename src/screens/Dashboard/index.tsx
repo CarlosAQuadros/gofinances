@@ -40,7 +40,7 @@ export function Dashboard() {
   {
     id: '2',
     type: "negative",
-    title: "hamburgueria pizssszy",
+    title: "hamburgueria pizzy",
     amount: "R$ 59,00",
     category: {
       name: 'alimentação',
