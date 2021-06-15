@@ -9,11 +9,12 @@ import {
 
 interface props{
     title:string;
+    onPress:()=>void;
 }
 
-export function CategorySelect({title}:props){
+export function CategorySelectButton({title, onPress}:props){
     return(
-        <Container>
+        <Container onPress={onPress}>
             <Category>
             {title}
             </Category>
