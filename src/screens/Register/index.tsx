@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Modal } from 'react-native';
 
-import { Input } from '../../components/Form/Input/';
+import { useForm } from 'react-hook-form'
+import { InputForm } from '../../components/Form/inputForm';
 import { Button } from '../../components/Form/Button/'
 import { TransactionTypeButton } from '../../components/Form/TransactionTypeButton';
 import { CategorySelectButton } from '../../components/Form/CategorySelectButton';
@@ -17,6 +18,10 @@ import {
     TransactionTypes
 } from './styles'
 
+interface formData {
+    name: string;
+    amount: string;
+}
 
 export function Register() {
     const [category, setCategory] = useState({
@@ -27,6 +32,25 @@ export function Register() {
 
     const [transactionType, setTransactiontype] = useState('');
     const [categoryModalOpen, setCategoryModalOpen] = useState(false)
+
+
+    const {
+        control,
+        handleSubmit
+
+    } = useForm();
+
+
+    function handleRegister(form: formData) {
+        const data = {
+            name: form.name,
+            amount: form.amount,
+            transactionType,
+            category: category.name
+        }
+
+        console.log(data)
+    }
 
 
     function handleTransactionTypeSelect(type: 'up' | 'down') {
@@ -42,6 +66,7 @@ export function Register() {
     }
 
 
+
     return (
         <Container>
             <Header>
@@ -50,12 +75,18 @@ export function Register() {
             </Header>
             <Form>
                 <Fields>
-                    <Input
+                    <InputForm
+                        name="name"
+                        control={control}
                         placeholder='Nome'
-                    ></Input>
-                    <Input
+
+                    ></InputForm>
+                    <InputForm
+                        name="amount"
+                        control={control}
                         placeholder='Preço'
-                    ></Input>
+
+                    ></InputForm>
                     <TransactionTypes>
                         <TransactionTypeButton
                             title='Income'
@@ -78,7 +109,9 @@ export function Register() {
                 </Fields>
 
                 <Button
+                    onPress={handleSubmit(handleRegister)}
                     title="Enviar" />
+
             </Form>
             <Modal
                 onRequestClose={handleCloseSelectCategoryModal}
