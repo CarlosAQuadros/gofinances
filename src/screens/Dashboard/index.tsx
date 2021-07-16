@@ -31,7 +31,7 @@ export function Dashboard() {
     id: '1',
     type: "positive",
     title: "desenvolvimento de site",
-    amount: "R$ 1500000",
+    amount: "R$ 10,200.00",
     category: {
       name: 'vendas',
       icon: 'dollar-sign'
@@ -82,7 +82,7 @@ export function Dashboard() {
       <HighlightCards>
         <HighlightCard
           title="Entradas"
-          amount="R$ 17.400,00"
+          amount="R$ 33.400,00"
           lastTransaction="Ultima entrada dia 13 de abril"
           type='up'
         />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Keyboard,
     Modal,
@@ -6,6 +6,7 @@ import {
     Alert
 } from 'react-native';
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useForm } from 'react-hook-form'
 import { InputForm } from '../../components/Form/inputForm';
 import { Button } from '../../components/Form/Button/'
@@ -34,16 +35,21 @@ interface formData {
 
 const schema = yup.object().shape({
     name: yup
-    .string()
-    .required('Nome é obrigatório'),
+        .string()
+        .required('Nome é obrigatório'),
     amount: yup
-    .number()
-    .typeError('informe um valor numérico')
-    .positive('o valor não pode ser negativo')
-    .required('o valor é obrigatório')
-  });
+        .number()
+        .typeError('informe um valor numérico')
+        .positive('o valor não pode ser negativo')
+        .required('o valor é obrigatório')
+});
+
+const dataKey = '@gofinances:transactions'
 
 export function Register() {
+
+
+
     const [category, setCategory] = useState({
         key: 'category',
         name: 'categoria',
@@ -64,21 +70,36 @@ export function Register() {
     });
 
 
-    function handleRegister(form: formData) {
+    async function handleRegister(form: formData) {
         if (!transactionType)
             return Alert.alert('selecione o tipo de transação!')
 
         if (category.key === 'category')
-        return Alert.alert('selecione a categoria')
+            return Alert.alert('selecione a categoria')
 
-        const data = {
+        const newTransaction = {
             name: form.name,
             amount: form.amount,
             transactionType,
             category: category.name
         }
+        try {
+            const data = await AsyncStorage.getItem(dataKey)
+            const currentData = data ?JSON.parse(data):[];
 
-        console.log(data)
+            const dataFormatted = [
+                ...currentData,
+                newTransaction
+            ]
+
+            await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted));
+
+        } catch (error) {
+            console.log(error);
+            Alert.alert('nao foi possivel cadastrar')
+
+        }
+
     }
 
 
@@ -94,6 +115,23 @@ export function Register() {
         setCategoryModalOpen(false)
     }
 
+
+    useEffect(() => {
+        async function loadData() {
+            const data = await AsyncStorage.getItem(dataKey);
+            console.log(JSON.parse(data!));
+
+        }
+        loadData()
+
+        //async function removeAll() {
+        //    const data = await AsyncStorage.removeItem(dataKey);
+//
+        //}
+        //removeAll()
+
+
+    }, [])
 
 
     return (
@@ -144,7 +182,7 @@ export function Register() {
 
                     <Button
                         onPress={handleSubmit(handleRegister)}
-                        
+
                         title="Enviar" />
 
                 </Form>
