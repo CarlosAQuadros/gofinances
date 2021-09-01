@@ -9,6 +9,9 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useForm } from 'react-hook-form'
 import { InputForm } from '../../components/Form/inputForm';
+
+import uuid from 'react-native-uuid';
+
 import { Button } from '../../components/Form/Button/'
 import { TransactionTypeButton } from '../../components/Form/TransactionTypeButton';
 import { CategorySelectButton } from '../../components/Form/CategorySelectButton';
@@ -16,6 +19,8 @@ import { CategorySelect } from '../CategorySelect';
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+
+import { useNavigation } from '@react-navigation/native';
 
 
 import {
@@ -44,7 +49,7 @@ const schema = yup.object().shape({
         .required('o valor é obrigatório')
 });
 
-const dataKey = '@gofinances:transactions'
+
 
 export function Register() {
 
@@ -59,10 +64,14 @@ export function Register() {
     const [transactionType, setTransactiontype] = useState('');
     const [categoryModalOpen, setCategoryModalOpen] = useState(false)
 
+    const dataKey = '@gofinances:transactions'
+    
+    const navigation = useNavigation();
 
     const {
         control,
         handleSubmit,
+        reset,
         formState: { errors }
 
     } = useForm({
@@ -78,14 +87,17 @@ export function Register() {
             return Alert.alert('selecione a categoria')
 
         const newTransaction = {
+            id:String(uuid.v4()),
             name: form.name,
             amount: form.amount,
             transactionType,
-            category: category.name
+            category: category.name,
+            date: new Date()
         }
         try {
             const data = await AsyncStorage.getItem(dataKey)
-            const currentData = data ?JSON.parse(data):[];
+
+            const currentData = data ? JSON.parse(data) : [];
 
             const dataFormatted = [
                 ...currentData,
@@ -94,6 +106,17 @@ export function Register() {
 
             await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted));
 
+
+            setTransactiontype('')
+            setCategory({
+                key: 'category',
+                name: 'categoria',
+            })
+            reset()
+            navigation.navigate('Listagem')
+
+
+
         } catch (error) {
             console.log(error);
             Alert.alert('nao foi possivel cadastrar')
@@ -101,6 +124,20 @@ export function Register() {
         }
 
     }
+    useEffect(() => {
+        async function loadData() {
+            const data = await AsyncStorage.getItem(dataKey);
+            console.log(JSON.parse(data!));
+        }
+        loadData()
+
+        //async function removeAll() {
+        //  const data = await AsyncStorage.removeItem(dataKey);
+        //}
+        //removeAll()
+
+
+    }, [])
 
 
     function handleTransactionTypeSelect(type: 'up' | 'down') {
@@ -116,22 +153,6 @@ export function Register() {
     }
 
 
-    useEffect(() => {
-        async function loadData() {
-            const data = await AsyncStorage.getItem(dataKey);
-            console.log(JSON.parse(data!));
-
-        }
-        loadData()
-
-        //async function removeAll() {
-        //    const data = await AsyncStorage.removeItem(dataKey);
-//
-        //}
-        //removeAll()
-
-
-    }, [])
 
 
     return (
