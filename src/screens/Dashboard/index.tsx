@@ -1,8 +1,11 @@
 import React from 'react';
 import { HighlightCard } from '../../components/HighlightCard';
 import { TransactionCard, TransactionCardProps } from '../../components/TransactionCard';
+import { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
+
   Container,
   Header,
   UserWrapper,
@@ -26,40 +29,21 @@ export interface DataListProps extends TransactionCardProps {
 
 export function Dashboard() {
 
+  const [data, setData] = useState<DataListProps[]>([]);
 
-  const data :DataListProps []= [{
-    id: '1',
-    type: "positive",
-    title: "desenvolvimento de site",
-    amount: "R$ 10,200.00",
-    category: {
-      name: 'vendas',
-      icon: 'dollar-sign'
-    },
-    date: "14/15/1222"
-  },
-  {
-    id: '2',
-    type: "negative",
-    title: "hamburgueria pizzy",
-    amount: "R$ 59,00",
-    category: {
-      name: 'alimentação',
-      icon: 'coffee'
-    },
-    date: "14/15/1222"
-  },
-  {
-    id: '3',
-    type: "negative",
-    title: "aluguel do apartamento",
-    amount: "R$ 1.200",
-    category: {
-      name: 'casa',
-      icon: 'shopping-bag'
-    },
-    date: "14/15/1222"
-  }]
+  async function loadTransaction() {
+    const dataKey = '@gofinances:transactions';
+    const response = await AsyncStorage.getItem(dataKey);
+    const trasactions = response ? JSON.parse(response) : [];
+
+    setData(trasactions)
+  }
+
+  useEffect(() => {
+    loadTransaction()
+  }, []);
+
+
   return (
     <Container >
       <Header>
@@ -73,10 +57,10 @@ export function Dashboard() {
               <UserName>Carlos</UserName>
             </User>
           </UserInfo>
-          <LogoutButton onPress={()=>{}}>
+          <LogoutButton onPress={() => { }}>
             <Icon name="power" />
           </LogoutButton>
-          
+
         </UserWrapper>
       </Header>
       <HighlightCards>
@@ -94,7 +78,7 @@ export function Dashboard() {
         />
         <HighlightCard
           title="Saldo"
-          amount="R$ 17.400,00"
+          amount="R$ 12.400,00"
           lastTransaction="Ultima entrada dia 13 de abril"
           type='total'
         />

@@ -7,11 +7,13 @@ import {
 } from 'react-native';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { useForm } from 'react-hook-form'
-import { InputForm } from '../../components/Form/inputForm';
+import { useNavigation } from '@react-navigation/native';
 
 import uuid from 'react-native-uuid';
 
+import { InputForm } from '../../components/Form/inputForm';
 import { Button } from '../../components/Form/Button/'
 import { TransactionTypeButton } from '../../components/Form/TransactionTypeButton';
 import { CategorySelectButton } from '../../components/Form/CategorySelectButton';
@@ -20,7 +22,7 @@ import { CategorySelect } from '../CategorySelect';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
-import { useNavigation } from '@react-navigation/native';
+
 
 
 import {
@@ -53,8 +55,6 @@ const schema = yup.object().shape({
 
 export function Register() {
 
-
-
     const [category, setCategory] = useState({
         key: 'category',
         name: 'categoria',
@@ -65,7 +65,7 @@ export function Register() {
     const [categoryModalOpen, setCategoryModalOpen] = useState(false)
 
     const dataKey = '@gofinances:transactions'
-    
+
     const navigation = useNavigation();
 
     const {
@@ -78,7 +78,6 @@ export function Register() {
         resolver: yupResolver(schema)
     });
 
-
     async function handleRegister(form: formData) {
         if (!transactionType)
             return Alert.alert('selecione o tipo de transação!')
@@ -87,7 +86,7 @@ export function Register() {
             return Alert.alert('selecione a categoria')
 
         const newTransaction = {
-            id:String(uuid.v4()),
+            id: String(uuid.v4()),
             name: form.name,
             amount: form.amount,
             transactionType,
