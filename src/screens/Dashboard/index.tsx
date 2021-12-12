@@ -21,6 +21,7 @@ import {
   Title,
   TransactionList
 } from './styles';
+import { number } from 'yup';
 
 
 export interface DataListProps extends TransactionCardProps {
@@ -31,17 +32,43 @@ export function Dashboard() {
 
   const [data, setData] = useState<DataListProps[]>([]);
 
-  async function loadTransaction() {
-    const dataKey = '@gofinances:transactions';
+  async function loadTransactions(){
+    const dataKey = '@gofinances:transactions'
     const response = await AsyncStorage.getItem(dataKey);
-    const trasactions = response ? JSON.parse(response) : [];
 
-    setData(trasactions)
+    const transactions = response ? JSON.parse(response): [];
+
+   const transactionsFormated:DataListProps[] =transactions.map((item:DataListProps)=>{
+
+      const date = Intl.DateTimeFormat('pt-BR', {
+        day:'2-digit',
+        month:'2-digit',
+        year:'numeric'
+      }).format(new Date(item.date))
+
+      let amount = Number(item.amount).toLocaleString('pt-BR', {style: 'currency',currency: 'BRL'});
+      amount = amount.replace('R$', 'R$ ');
+
+      return{
+        id:item.id,
+        name:item.name,
+        amount,
+        type:item.type,
+        category:item.category,
+        date
+      }
+   })
+    setData(transactionsFormated)
   }
+  
+  
+  
+  
+  useEffect(()=>{
+    loadTransactions()
+    
 
-  useEffect(() => {
-    loadTransaction()
-  }, []);
+  },[]) 
 
 
   return (
