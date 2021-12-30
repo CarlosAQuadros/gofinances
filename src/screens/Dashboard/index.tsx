@@ -134,13 +134,13 @@ export function Dashboard() {
       <HighlightCards>
         <HighlightCard
           title="Entradas"
-          amount={highlightData.expensive.total}
+          amount={'1234'}
           lastTransaction="Ultima entrada dia 13 de abril"
           type='up'
         />
         <HighlightCard
           title="Saidas"
-          amount={highlightData.expensive.total}
+          amount={'13245'}
           lastTransaction="Ultima entrada dia 13 de abril"
           type='down'
         />
