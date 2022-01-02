@@ -104,8 +104,6 @@ export function Register() {
             ]
 
             await AsyncStorage.setItem(dataKey, JSON.stringify(dataFormatted));
-
-
             setTransactiontype('')
             setCategory({
                 key: 'category',
@@ -114,14 +112,10 @@ export function Register() {
             reset()
             navigation.navigate('Listagem')
 
-
-
         } catch (error) {
             console.log(error);
             Alert.alert('nao foi possivel cadastrar')
-
         }
-
     }
     useEffect(() => {
         async function loadData() {
@@ -134,11 +128,7 @@ export function Register() {
         //  const data = await AsyncStorage.removeItem(dataKey);
         //}
         //removeAll()
-
-
     }, [])
-
-
     function handleTransactionTypeSelect(type: 'positive' | 'negative') {
         setTransactiontype(type)
     };
@@ -150,9 +140,6 @@ export function Register() {
     function handleCloseSelectCategoryModal() {
         setCategoryModalOpen(false)
     }
-
-
-
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
