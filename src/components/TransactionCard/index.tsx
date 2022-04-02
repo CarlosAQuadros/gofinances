@@ -29,9 +29,9 @@ interface props {
 
 
 export function TransactionCard({ data }: props) {
-    console.log(data)
+   
     const category = categories.filter(item => item.name === data.category)[0];
-    console.log(category)
+ 
     return (
         <Container>
             <Title>{data.name}</Title>

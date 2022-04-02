@@ -18,6 +18,7 @@ export function AppRoutes(){
 const theme =useTheme();
     return (
 
+  
         <Navigator
             tabBarOptions={{
                 activeTintColor: theme.colors.secondary,
