@@ -69,14 +69,10 @@ export function Resume() {
 
 
   }
-
-
   useEffect(() => {
     loadData()
 
   }, [])
-
-
   useFocusEffect(useCallback(
     () => { loadData()},
     [],
