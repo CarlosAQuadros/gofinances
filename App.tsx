@@ -20,6 +20,7 @@ import{
 import theme from './src/global/styles/theme'
 
 import {Register}  from './src/screens/Register';
+import { SafeAreaView } from 'react-native';
 
 
 
@@ -35,11 +36,14 @@ export default function App() {
 
 
   return(
+      
     <ThemeProvider theme={theme}>
+
       <NavigationContainer>
           <AppRoutes />
       </NavigationContainer>
      
     </ThemeProvider>
+ 
   );
 }

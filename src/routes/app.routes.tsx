@@ -8,7 +8,7 @@ import {useTheme} from "styled-components";
 
 import { Dashboard } from "../screens/Dashboard";
 import { Register } from "../screens/Register";
-
+import { Resume } from "../screens/Resume";
 
 const { Navigator, Screen}= createBottomTabNavigator();
 
@@ -26,7 +26,7 @@ const theme =useTheme();
                 labelPosition:"beside-icon",
                 style:{
                     paddingVertical:Platform.OS ==="ios" ? 20 :0,
-                    height:60
+                    height:95
                 }
             }}
 
@@ -55,7 +55,7 @@ const theme =useTheme();
                     />
                 ))
             }} />
-            <Screen name="Resumo" component={Register}
+            <Screen name="Resumo" component={Resume}
             options={{
                 tabBarIcon:(({size, color})=> (
                     <MaterialIcons
