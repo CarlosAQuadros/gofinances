@@ -78,9 +78,7 @@ export function Resume() {
 
 
   useFocusEffect(useCallback(
-    () => {
-      loadData()
-    },
+    () => { loadData()},
     [],
   ))
   return (
